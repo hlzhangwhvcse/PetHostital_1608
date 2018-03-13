@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="PetHostital_1608">
+    <output-path>$PROJECT_DIR$/out/artifacts/PetHostital_1608</output-path>
+    <root id="root" />
+  </artifact>
+</component>
