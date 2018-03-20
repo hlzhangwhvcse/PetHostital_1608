@@ -7,7 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "LoginServlet")
+import ph.po.User;
+import ph.dao.UserDAO;
+
+//@WebServlet(name = "LoginServlet")
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -21,7 +25,8 @@ public class LoginServlet extends HttpServlet
 
             //1.验证验证码
             String realcode=(String) request.getSession(true).getAttribute("realcode");//session中的验证码
-            if(!realcode.equalsIgnoreCase(usercode))//如果两个验证码不一致
+//            if(!realcode.equalsIgnoreCase(usercode))//如果两个验证码不一致
+            if(false)
             {
                 request.setAttribute("msg", "验证码输入错误");
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
