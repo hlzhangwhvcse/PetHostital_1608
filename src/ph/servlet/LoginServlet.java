@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet
         try{
             /* 0.取出表单中的用户提交数据 */
             String username = request.getParameter("username");
-            System.out.println(username);
+//            System.out.println(username);
             String pwd = request.getParameter("pwd");
             String usercode = request.getParameter("usercode");//用户输入的验证码
 
