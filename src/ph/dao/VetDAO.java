@@ -100,4 +100,47 @@ public class VetDAO
         }
         return vets;
     }
+
+
+    /**
+     * 根据医生Id，删除医生表的对应记录*
+     * @param vetId
+     *            vetId 医生Id
+     * @return void
+     * @throws Exception
+     */
+    public void delete(int vetId) throws Exception
+    {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","123456");//  协议://域名(ip):端口/资源（数据库名）
+            ps = con.prepareStatement("delete from t_vet where id=?");
+            ps.setInt(1, vetId);
+            ps.executeUpdate();
+        }
+        catch(ClassNotFoundException e)
+        {
+            e.printStackTrace();
+            throw new Exception("找不到驱动:"+e.getMessage());//异常不能在底层丢失了
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new Exception("数据库操作错误:"+e.getMessage());
+        }
+        finally
+        {
+            if(ps!=null)
+            {
+                ps.close();
+            }
+            if(con!=null)
+            {
+                con.close();
+            }
+        }
+    }
 }

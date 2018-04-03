@@ -40,7 +40,38 @@ public class VetServlet extends HttpServlet
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-
+        try
+        {
+            String mode = request.getParameter("mode");//获得从vetsearch.jsp或vetsearch_result.jsp的超链接传递来的mode参数
+            if("deleteVet".equals(mode))
+            {
+//                new VetDAO().delete(Integer.parseInt(request.getParameter("vetId")));
+                String strVetId = request.getParameter("vetId");
+                int vetId = Integer.parseInt(strVetId);
+                VetDAO vetDAO = new VetDAO();
+                vetDAO.delete(vetId);
+                request.setAttribute("msg", "成功删除医生："+request.getParameter("vetName"));
+                request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
+            }
+//            else if("newVet".equals(mode))
+//            {
+//                request.setAttribute("specs", new SpecialityDAO().getAll());
+//                request.getRequestDispatcher("/vetadd.jsp").forward(request, response);
+//            }
+//            else if("newSpec".equals(mode))
+//            {
+//                request.getRequestDispatcher("/specialityAdd.jsp").forward(request, response);
+//            }
+            else
+            {
+                request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
+            }
+        }
+        catch (Exception e)
+        {
+            request.setAttribute("msg", e.getMessage());
+            request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
+        }
 
     }
 
