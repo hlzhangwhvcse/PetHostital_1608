@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import java.util.List;
-//import ph.dao.SpecialityDAO;
+import ph.dao.SpecialityDAO;
 import ph.dao.VetDAO;
-//import ph.po.Speciality;
+import ph.po.Speciality;
 import ph.po.Vet;
 
 //@WebServlet(name = "VetServlet")
@@ -27,15 +27,14 @@ public class VetServlet extends HttpServlet
         {
             search(request, response);
         }
+        else if("addSpec".equals(m))
+        {
+            addSpec(request, response);
+        }
 //        else if("addVet".equals(m))
 //        {
 //            addVet(request, response);
 //        }
-//        else if("addSpec".equals(m))
-//        {
-//            addSpec(request, response);
-//        }
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -53,14 +52,14 @@ public class VetServlet extends HttpServlet
                 request.setAttribute("msg", "成功删除医生："+request.getParameter("vetName"));
                 request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
             }
+            else if("newSpec".equals(mode))
+            {
+                request.getRequestDispatcher("/specialityAdd.jsp").forward(request, response);
+            }
 //            else if("newVet".equals(mode))
 //            {
 //                request.setAttribute("specs", new SpecialityDAO().getAll());
 //                request.getRequestDispatcher("/vetadd.jsp").forward(request, response);
-//            }
-//            else if("newSpec".equals(mode))
-//            {
-//                request.getRequestDispatcher("/specialityAdd.jsp").forward(request, response);
 //            }
             else
             {
@@ -98,5 +97,34 @@ public class VetServlet extends HttpServlet
             request.setAttribute("msg", e.getMessage());
             request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
         }
+    }
+
+    private void addSpec(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException
+    {
+        Speciality spec = new Speciality();
+        String specName = request.getParameter("specName");
+        String specDesc = request.getParameter("specDesc");
+        if("".equals(specName))
+        {
+            request.setAttribute("msg", "请输入专业名称");
+            request.getRequestDispatcher("/specialityAdd.jsp").forward(request, response);
+        }
+        else
+        {
+            spec.setName(specName);
+            spec.setDesc(specDesc);
+            try
+            {
+                new SpecialityDAO().save(spec);
+                request.setAttribute("msg", "添加成功");
+                request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
+            }
+            catch (Exception e)
+            {
+                request.setAttribute("msg",e.getMessage());
+                doGet(request,response);
+            }
+        }
+
     }
 }
