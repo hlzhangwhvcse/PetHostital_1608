@@ -143,4 +143,84 @@ public class VetDAO
             }
         }
     }
+
+    /**
+     * 1.将vet.name 保存到 t_vet 2.同时取得其 id
+     * 3.将vet.id和vet.specs里面所有的sid存到t_vet_speciality表中（vid,sid0） (vid,sid1)
+     * (vid,sid2)
+     *
+     * @param vet
+     * @throws Exception
+     */
+    public void save(Vet vet) throws Exception
+    {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph", "root", "123456");
+            //JDBC默认是事务自动提交  即所有的executeUpdate会立即更新到数据库，如果需要使用事务要 1  停止自动提交  2.在操作完成后手动提交  3 出现异常回滚
+            //事务1  停止自动提交
+            con.setAutoCommit(false);
+            // 1.将vet.name 保存到 t_vet
+            ps = con.prepareStatement("insert into t_vet value(null,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, vet.getName());
+            ps.executeUpdate();
+            // 2.同时取得其 id 首先需要对ps进行修改
+            rs = ps.getGeneratedKeys();
+            if (rs.next())
+            {
+                vet.setId(rs.getInt(1));
+            }
+            // 3.将vet.id和vet.specs里面所有的sid存到t_vet_speciality表中（vid,sid0）(vid,sid1) (vid,sid2)
+            if (vet.getSpecs().size() > 0)
+            {
+                String sql = "insert into t_vet_speciality values (?,?)";
+                for (int i = 1; i < vet.getSpecs().size(); i++) // 如果vet.specs的大小大余1才会执行的循环
+                {
+                    sql += ",(?,?)";
+                }
+                ps=con.prepareStatement(sql);
+                int i=1;
+                for(Speciality s:vet.getSpecs())
+                {
+                    ps.setInt(i++	, vet.getId());
+                    ps.setInt(i++   , s.getId());
+                }
+                ps.executeUpdate();
+            }
+//			事务2.在操作完成后手动提交
+            con.commit();
+        } catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+            throw new Exception("找不到驱动:" + e.getMessage());
+        }
+        catch (SQLException e)
+        {
+            //事务3 出现异常回滚
+            if(con!=null)con.rollback();
+
+            e.printStackTrace();
+            throw new Exception("SQL异常:" + e.getMessage());
+        }
+        finally
+        {
+            if (rs != null)
+            {
+                rs.close();
+            }
+            if (ps != null)
+            {
+                ps.close();
+            }
+            if (con != null)
+            {
+                con.close();
+            }
+        }
+    }
 }
