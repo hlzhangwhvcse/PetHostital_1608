@@ -61,7 +61,7 @@ public class UserDAO
         try {
 
             Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","123456");//  协议://域名(ip):端口/资源（数据库名）
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","root");//  协议://域名(ip):端口/资源（数据库名）
             ps=con.prepareStatement("select * from t_user where name=?");
             ps.setString(1, userName);
             rs=ps.executeQuery();
@@ -91,13 +91,15 @@ public class UserDAO
         return user;
     }
 
-    public List<User> searchCustomer(String cname) throws Exception{
+    public List<User> searchCustomer(String cname) throws Exception
+    {
         List<User> users = new ArrayList<User>();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        try {
+        try
+        {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root", "root");
             // 1.找符合条件的医生
@@ -105,36 +107,43 @@ public class UserDAO
             ps.setString(1, "%" + cname + "%");
 
             rs = ps.executeQuery();
-            while (rs.next()) {// 这里查询的是t_vet.* 所以使用Vet封装
-                User user=new User();
+            while(rs.next()) // 这里查询的是t_user.* 所以使用User封装
+            {
+                User user = new User();
                 user.setAddress(rs.getString("address"));;
                 user.setId(rs.getInt("id"));
                 user.setName(rs.getString("name"));
                 user.setPwd(rs.getString("pwd"));
                 user.setRole(rs.getString("role"));
                 user.setTel(rs.getString("tel"));
-
                 users.add(user);
             }
-
-
-
-
-        } catch (ClassNotFoundException e) {
+        }
+        catch(ClassNotFoundException e)
+        {
             e.printStackTrace();
             throw new Exception("找不到驱动:" + e.getMessage());
-        } catch (SQLException e) {
+        }
+        catch(SQLException e)
+        {
             e.printStackTrace();
             throw new Exception("SQL异常:" + e.getMessage());
-        } finally {
-            if (rs != null)
-                rs.close();
-            if (ps != null)
-                ps.close();
-            if (con != null)
-                con.close();
         }
-
+        finally
+        {
+            if(rs != null)
+            {
+                rs.close();
+            }
+            if(ps != null)
+            {
+                ps.close();
+            }
+            if(con != null)
+            {
+                con.close();
+            }
+        }
         return users;
     }
 
