@@ -53,19 +53,21 @@ public class UserDAO
      * @param userName
      * @return
      */
-    public User getByName(String userName) throws Exception{
+    public User getByName(String userName) throws Exception
+    {
         User user=null;
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        try {
-
+        try
+        {
             Class.forName("com.mysql.jdbc.Driver");
             con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","123456");//  协议://域名(ip):端口/资源（数据库名）
             ps=con.prepareStatement("select * from t_user where name=?");
             ps.setString(1, userName);
             rs=ps.executeQuery();
-            if(rs.next()){//如果if为true  表示找到了记录  此时才需要进行User对象的初始化(new User())以及 数据封装(setXxx)
+            if(rs.next())//如果if为true  表示找到了记录  此时才需要进行User对象的初始化(new User())以及 数据封装(setXxx)
+            {
                 user=new User();
                 user.setAddress(rs.getString("address"));;
                 user.setId(rs.getInt("id"));
@@ -74,20 +76,23 @@ public class UserDAO
                 user.setRole(rs.getString("role"));
                 user.setTel(rs.getString("tel"));
             }
-
-        }catch(ClassNotFoundException e){
+        }
+        catch(ClassNotFoundException e)
+        {
             e.printStackTrace();
             throw new Exception("找不到驱动:"+e.getMessage());//异常不能在底层丢失了
-        }catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
             throw new Exception("数据库操作错误:"+e.getMessage());
         }
-        finally{
+        finally
+        {
             if(rs!=null)rs.close();
             if(ps!=null)ps.close();
             if(con!=null)con.close();
         }
-
         return user;
     }
 
@@ -153,13 +158,15 @@ public class UserDAO
      * @return
      * @throws Exception
      */
-    public User getById(int id) throws Exception{
+    public User getById(int id) throws Exception
+    {
         User user=null;
 
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        try {
+        try
+        {
 
             Class.forName("com.mysql.jdbc.Driver");
             con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","123456");//  协议://域名(ip):端口/资源（数据库名）
@@ -175,15 +182,19 @@ public class UserDAO
                 user.setRole(rs.getString("role"));
                 user.setTel(rs.getString("tel"));
             }
-
-        }catch(ClassNotFoundException e){
+        }
+        catch(ClassNotFoundException e)
+        {
             e.printStackTrace();
             throw new Exception("找不到驱动:"+e.getMessage());//异常不能在底层丢失了
-        }catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
             throw new Exception("数据库操作错误:"+e.getMessage());
         }
-        finally{
+        finally
+        {
             if(rs!=null)rs.close();
             if(ps!=null)ps.close();
             if(con!=null)con.close();
@@ -213,7 +224,7 @@ public class UserDAO
             e.printStackTrace();
             throw new Exception("找不到驱动:"+e.getMessage());//异常不能在底层丢失了
         }
-        catch (SQLException e)
+        catch(SQLException e)
         {
             e.printStackTrace();
             throw new Exception("数据库操作错误:"+e.getMessage());
