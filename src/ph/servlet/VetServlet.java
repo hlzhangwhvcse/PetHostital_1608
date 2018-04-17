@@ -129,44 +129,50 @@ public class VetServlet extends HttpServlet
 
     private void addVet(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException
     {
-        //这里需要根据表单封装一个Vet   表单里有医生名  专业id下拉列表
-        Vet vet=new Vet();
-        //根据下拉列表封装多个专业
-        String[] sids = request.getParameterValues("sid");
-        String vname = request.getParameter("vname");
-        if("".equals(vname))
+        try
         {
-            request.setAttribute("msg", "请输入医生姓名");
-            //这里虽然要返回的vetadd.jsp提示消息 但是不能直接转发到vetadd.jsp  因为vetadd.jsp需要专业集合显示数据
-//			request.getRequestDispatcher("/vetadd.jsp").forward(request, response);
-            doGet(request, response);
-        }
-        else if(null==sids || 0==sids.length)
-        {
-            request.setAttribute("msg", "请选择专业");
-            doGet(request, response);
-        }
-        else
-        {
-            vet.setName(vname);
-            for(String sid:sids)
+            //这里需要根据表单封装一个Vet   表单里有医生名  专业id下拉列表
+            Vet vet=new Vet();
+            //根据下拉列表封装多个专业
+            String[] sids = request.getParameterValues("sid");
+            String vname = request.getParameter("vname");
+            if("".equals(vname))
             {
-                Speciality s=new Speciality();
-                s.setId(Integer.parseInt(sid));
-                vet.getSpecs().add(s);
+//              request.setAttribute("msg", "请输入医生姓名");
+                //这里虽然要返回的vetadd.jsp提示消息 但是不能直接转发到vetadd.jsp  因为vetadd.jsp需要专业集合显示数据
+//			    request.getRequestDispatcher("/vetadd.jsp").forward(request, response);
+//              doGet(request, response);
+                request.setAttribute("msg", "请输入医生姓名");
+                request.setAttribute("specs", new SpecialityDAO().getAll());
+                request.getRequestDispatcher("/vetadd.jsp").forward(request, response);//这里可以直接转发到 vetadd.jsp
+                return;// 跳转到vetadd.jsp后，函数直接返回，modify by hlzhang, 20180417
             }
-            try
+            else if(null==sids || 0==sids.length)
             {
+                request.setAttribute("msg", "请选择专业");
+//              doGet(request, response);
+                request.setAttribute("specs", new SpecialityDAO().getAll());
+                request.getRequestDispatcher("/vetadd.jsp").forward(request, response);//这里可以直接转发到 vetadd.jsp
+                return;// 跳转到vetadd.jsp后，函数直接返回，modify by hlzhang, 20180417
+            }
+            else
+            {
+                vet.setName(vname);
+                for(String sid:sids)
+                {
+                    Speciality s=new Speciality();
+                    s.setId(Integer.parseInt(sid));
+                    vet.getSpecs().add(s);
+                }
                 new VetDAO().save(vet);
                 request.setAttribute("msg", "添加新医生成功：" + vet.getName());
                 request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
             }
-            catch (Exception e)
-            {
-                request.setAttribute("msg",e.getMessage());
-                doGet(request,response);
-            }
         }
-
+        catch (Exception e)
+        {
+            request.setAttribute("msg",e.getMessage());
+            doGet(request,response);
+        }
     }
 }

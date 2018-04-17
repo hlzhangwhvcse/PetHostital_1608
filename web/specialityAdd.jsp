@@ -36,7 +36,7 @@
             </table>
 
         </form>
-        <h4><%=request.getAttribute("msg")==null?"":request.getAttribute("msg") %></h4>
+        <h4 align="center" style="color:red"><%=request.getAttribute("msg")==null?"":request.getAttribute("msg") %></h4>
     </div>
     <div id="footer"></div>
 </div>

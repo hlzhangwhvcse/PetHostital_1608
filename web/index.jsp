@@ -56,7 +56,7 @@
       </table>
 
     </form>
-    <h4><%=request.getAttribute("msg")==null?"":request.getAttribute("msg") %>
+    <h4 align="center" style="color:red"><%=request.getAttribute("msg")==null?"":request.getAttribute("msg") %>
       <%=request.getParameter("para")==null?"":request.getParameter("para") %></h4>
   </div>
   <div id="footer">
