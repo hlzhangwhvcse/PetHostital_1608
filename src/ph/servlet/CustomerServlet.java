@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//import ph.dao.PetDAO;
+import ph.dao.PetDAO;
 import ph.dao.UserDAO;
-//import ph.po.Pet;
+import ph.po.Pet;
 import ph.po.User;
 @WebServlet("/CustomerServlet")
 
@@ -38,6 +38,10 @@ public class CustomerServlet extends HttpServlet
         if("delete".equals(mode))//如果mode的值等于"delete"，说明请求是来自customerserarch_result.jsp的“删除客户”链接.add by hlzhang 20180417
         {
             deleteCustomer(request, response);
+        }
+        else if("detail".equals(mode))//如果mode的值等于"detail"，说明请求是来自customerserarch_result.jsp的“”链接.add by hlzhang 2018041
+        {
+            showDetail(request, response);
         }
     }
 
@@ -110,6 +114,26 @@ public class CustomerServlet extends HttpServlet
             userDAO.delete(id);
             request.setAttribute("msg", "删除客户成功");
             request.getRequestDispatcher("/customersearch.jsp").forward(request, response);
+        }
+        catch (Exception e)
+        {
+            request.setAttribute("msg", e.getMessage());
+            request.getRequestDispatcher("/customersearch.jsp").forward(request, response);
+        }
+    }
+
+    private void showDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        try
+        {
+            UserDAO userDAO = new UserDAO();
+            PetDAO petDAO = new PetDAO();
+            int ownerId = Integer.valueOf(request.getParameter("id"));//得到customersearch_resultl.jsp的“查看明细”链接发送来的参数客户id
+            User user = userDAO.getById(ownerId);
+            List<Pet> pets = petDAO.getPetsByOwnerId(ownerId);
+            user.setPets(pets);
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("/customerdetail.jsp").forward(request, response);
         }
         catch (Exception e)
         {

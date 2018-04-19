@@ -47,7 +47,7 @@
                 <td><%=user.getName()%></td>
                 <td><%=user.getTel()%></td>
                 <td><%=user.getAddress()%></td>
-                <td><a href="CustomerServlet?id=<%=user.getId() %>">查看</a></td>
+                <td><a href="CustomerServlet?mode=detail&id=<%=user.getId() %>">查看</a></td>
                 <td><a href="CustomerServlet?mode=delete&cid=<%=user.getId()%>" onclick=" return confirmDialog();">删除</a></td>
             </tr>
             <%
