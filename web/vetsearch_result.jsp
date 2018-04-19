@@ -64,7 +64,8 @@
 
             <tr>
                 <td></td>
-                <td><input value="返回" type="button" onclick="history.back(-1)" /></td>
+                <%--<td><input value="返回" type="button" onclick="history.back(-1)" /></td>--%>
+                <td><input value="返回" type="button" onclick="location.href='vetsearch.jsp'" /></td>
             </tr>
         </table>
 
