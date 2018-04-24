@@ -34,7 +34,11 @@ public class PetServlet extends HttpServlet
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-
+        String m = request.getParameter("m");
+        if("deletePet".equals(m))
+        {
+            deletePet(request, response);
+        }
     }
 
     //查询宠物的处理逻辑，by hlzhang 20180424
@@ -55,6 +59,26 @@ public class PetServlet extends HttpServlet
                 request.setAttribute("pets", pets);
                 request.getRequestDispatcher("/petSearchResult.jsp").forward(request, response);
             }
+        }
+        catch (Exception e)
+        {
+            request.setAttribute("msg", e.getMessage());
+            request.getRequestDispatcher("/petSearch.jsp").forward(request, response);
+        }
+    }
+
+    //在宠物管理页面执行删除宠物操作 by hlzhang，20180424
+    private void deletePet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        try
+        {
+//            new PetDAO().delete(Integer.parseInt(request.getParameter("petId")));
+            String strPetId = request.getParameter("petId");
+            int petId = Integer.parseInt(strPetId);
+            PetDAO petDAO = new PetDAO();
+            petDAO.delete(petId);
+            request.setAttribute("msg", "成功删除宠物："+request.getParameter("petName"));
+            request.getRequestDispatcher("/petSearch.jsp").forward(request, response);
         }
         catch (Exception e)
         {
