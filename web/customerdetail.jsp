@@ -89,7 +89,9 @@
         </table>
 
     </div>
-    <div id="footer"></div>
+    <div id="footer">
+        <%@ include  file="inc/footer.inc"%>
+    </div>
 </div>
 </body>
 </html>

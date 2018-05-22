@@ -76,7 +76,7 @@ a:active    {
 }
 #main{
     min-height:500px;
-    background-color:#CCCCCC;
+    background-color:pink;
 }
 
 
@@ -116,7 +116,15 @@ a:active    {
 
 
 #footer{
-    background-color:#0033FF;
+    background-color:yellowgreen;
     height:80px;
 }
 
+
+#footer p{
+    color:red;
+    font-size:20px;
+    padding-top:40px;
+    width:800px;/*  通过设置margin的左右为auto可以实现居中，前提是被居中元素指定宽度*/
+    margin:0px auto;
+}

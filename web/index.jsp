@@ -60,7 +60,7 @@
       <%=request.getParameter("para")==null?"":request.getParameter("para") %></h4>
   </div>
   <div id="footer">
-
+    <%@ include  file="inc/footer.inc"%>
   </div>
 </div>
 </body>
