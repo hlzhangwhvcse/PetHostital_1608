@@ -137,12 +137,12 @@ public class PetServlet extends HttpServlet
             return;//跳转到 newPetAdd.jsp页面后，本函数直接退出
         }
         Part p = request.getPart("photo");
-        String oldname = getFileName(p);
+        String filename = getFileName(p);
         //这里需要上传文件，就需要得到上传文件的目标路径，这里的文件保存路径不能是任意路径，只能放到当前应用根目录及其子目录下，才能够通过浏览器访问，如何得到这个当前应用根目录，一般情况下不能写死路径，应该通过代码动态得到路径
         String photo = "photo/default.jpg";
-        if(!oldname.equals(""))//如果旧文件名不为空表示用户上传了照片，则需要保存照片，否则可以省略这个步骤
+        if(!filename.equals(""))//如果旧文件名不为空表示用户上传了照片，则需要保存照片，否则可以省略这个步骤
         {
-            String type = oldname.substring(oldname.lastIndexOf("."));//xxxx.xx
+            String type = filename.substring(filename.lastIndexOf("."));//xxxx.xx
             String newname = System.currentTimeMillis() + type;
             //System.out.println(getRuntimePath());//路径有了差文件名，如果使用原文件名，可能出现重名文件，若非要使用原文件名，则可以分文件夹或将文件名改为时间毫秒数
             String saveFile = getRuntimePath() + newname;
