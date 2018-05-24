@@ -26,7 +26,7 @@ public class PetDAO
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","123456");//  协议://域名(ip):端口/资源（数据库名）
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","root");//  协议://域名(ip):端口/资源（数据库名）
             ps = con.prepareStatement("select * from t_pet where ownerId=?");
             ps.setInt(1, ownerId);
             rs = ps.executeQuery();
@@ -87,7 +87,7 @@ public class PetDAO
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph", "root", "123456");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph", "root", "root");
             // 1.找符合条件的医生
             String sql = "select t_pet.*, t_user.name from t_pet, t_user  where t_pet.ownerId=t_user.id and t_pet.name like ? and t_user.name like ?";
             ps = con.prepareStatement(sql);
@@ -148,7 +148,7 @@ public class PetDAO
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","123456");//  协议://域名(ip):端口/资源（数据库名）
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","root");//  协议://域名(ip):端口/资源（数据库名）
             ps = con.prepareStatement("delete from t_pet where id=?");
             ps.setInt(1, petId);
             ps.executeUpdate();
@@ -188,7 +188,7 @@ public class PetDAO
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","123456");//  协议://域名(ip):端口/资源（数据库名）
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root","root");//  协议://域名(ip):端口/资源（数据库名）
             ps = con.prepareStatement("insert into t_pet value(null,?,?,?,?)");
             ps.setString(1, pet.getName());
             ps.setString(2, pet.getBirthdate());

@@ -25,6 +25,10 @@
                     <td><input  name="petName" title="按宠物名字查询病例信息"/></td>
                 </tr>
                 <tr>
+                    <td>宠物主人</td>
+                    <td><input  name="ownerName" title="按宠物主人姓名查询"/></td>
+                </tr>
+                <tr>
                     <td></td>
                     <td><input  type="submit" value="查询" /> <input type="reset" value="清空"/></td>
                 </tr>

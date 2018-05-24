@@ -38,9 +38,11 @@ public class VisitServlet extends HttpServlet
     private void searchPet(HttpServletRequest request,HttpServletResponse response)throws ServletException, IOException
     {
         String petName = request.getParameter("petName");
+        String ownerName = request.getParameter("ownerName");
         try
         {
-            List<Pet> pets = new PetDAO().search(petName, "");
+//            List<Pet> pets = new PetDAO().search(petName, "");
+            List<Pet> pets = new PetDAO().search(petName, ownerName);
             if(0==pets.size())
             {
                 request.setAttribute("msg", "没有查到宠物信息");
