@@ -223,4 +223,9 @@ public class VetDAO
             }
         }
     }
+
+    public List<Vet> getAll() throws Exception
+    {
+        return search("", "");
+    }
 }
