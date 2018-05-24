@@ -37,7 +37,7 @@
                 <td><img src="<%=pet.getPhoto()%>" width="80px" height="100px"></td>
                 <td class="minWidth">姓名:<%=pet.getName()%><br/>生日:<%=pet.getBirthdate()%><br/>主人：<%=pet.getOwnerName()%><br/>电话：<%=user.getTel()%><br/>地址：<%=user.getAddress()%></td>
                 <td class="minWidth">
-                    <a href="VisitServlet?mode=showResume&petId=<%=pet.getId()%>">查看病例</a>|
+                    <a href="VisitServlet?mode=showCaseHistory&petId=<%=pet.getId()%>">查看病例</a>|
                     <a href="VisitServlet?mode=toAdd&customerId=<%=user.getId()%>&petId=<%=pet.getId()%>&petName=<%=URLEncoder.encode(pet.getName(), "UTF-8")%>">添加病例</a></td>
             </tr>
             <%
