@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8"%>
     <a href="QuitServlet">退出</a>
+    <a href="">修改密码</a>
     <h1>社区宠物医院</h1>
     <ul class="menu">
     <li><a href="vetsearch.jsp">医生管理</a></li>
