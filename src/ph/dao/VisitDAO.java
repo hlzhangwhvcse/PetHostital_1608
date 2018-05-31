@@ -20,7 +20,7 @@ public class VisitDAO
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph", "root", "123456");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph", "root", "root");
 //            ps = con.prepareStatement("select visit.*,vet.name from t_visit as visit inner join t_vet as vet on (visit.vetId=vet.id) where visit.petId=?");
             ps = con.prepareStatement("select t_vet.name, t_visit.*\n" +
                     " from t_vet, t_visit\n" +
@@ -71,7 +71,7 @@ public class VisitDAO
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root", "123456");// 协议://域名(ip):端口/资源（数据库名）
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root", "root");// 协议://域名(ip):端口/资源（数据库名）
 
 //            ps = con.prepareStatement("insert into t_visit value(null,?,?,CURDATE(),?,?)");
             ps = con.prepareStatement("insert into t_visit value(null,?,?,NOW(),?,?)");

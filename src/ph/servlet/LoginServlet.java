@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import ph.po.User;
 import ph.dao.UserDAO;
+import ph.utils.MD5Util;
 
 //@WebServlet(name = "LoginServlet")
 @WebServlet("/LoginServlet")
@@ -39,7 +40,8 @@ public class LoginServlet extends HttpServlet
                     request.setAttribute("msg", "用户名不存在");
                     request.getRequestDispatcher("/index.jsp").forward(request, response);
                 }
-                else if(!user.getPwd().equals(pwd))
+//                else if(!user.getPwd().equals(pwd))
+                else if(!user.getPwd().equals(MD5Util.MD5(pwd)))
                 {
                     request.setAttribute("msg", "密码输入错误");
                     request.getRequestDispatcher("/index.jsp").forward(request, response);
@@ -47,7 +49,19 @@ public class LoginServlet extends HttpServlet
                 else
                 {
                     request.getSession(true).setAttribute("user", user);
-                    request.setAttribute("msg", "登录成功");
+//                    request.setAttribute("msg", "登录成功");
+                    if(user.getRole().equals("customer"))
+                    {
+                        request.setAttribute("msg", "客户" + user.getName() + "登录成功");
+                    }
+                    else if(user.getRole().equals("admin"))
+                    {
+                        request.setAttribute("msg", "系统管理员" + user.getName() + "登录成功");
+                    }
+                    else
+                    {
+                        request.setAttribute("msg", user.getName() + "登录成功");
+                    }
                     request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
                 }
             }

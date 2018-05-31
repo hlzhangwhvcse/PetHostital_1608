@@ -13,9 +13,11 @@ import ph.dao.PetDAO;
 import ph.dao.UserDAO;
 import ph.po.Pet;
 import ph.po.User;
-@WebServlet("/CustomerServlet")
+import ph.utils.MD5Util;
 
 //@WebServlet(name = "CustomerServlet")
+@WebServlet("/CustomerServlet")
+
 public class CustomerServlet extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -88,7 +90,8 @@ public class CustomerServlet extends HttpServlet
         user.setAddress(request.getParameter("address"));
         user.setTel(request.getParameter("tel"));
         user.setRole("customer");
-        user.setPwd("123456");
+//        user.setPwd("123456");
+        user.setPwd(MD5Util.MD5("123456"));
 
         try
         {
