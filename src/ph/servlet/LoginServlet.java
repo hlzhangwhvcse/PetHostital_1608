@@ -53,16 +53,19 @@ public class LoginServlet extends HttpServlet
                     if(user.getRole().equals("customer"))
                     {
                         request.setAttribute("msg", "客户" + user.getName() + "登录成功");
+                        request.getRequestDispatcher("/customersearch.jsp").forward(request, response);
                     }
                     else if(user.getRole().equals("admin"))
                     {
                         request.setAttribute("msg", "系统管理员" + user.getName() + "登录成功");
+                        request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
                     }
                     else
                     {
                         request.setAttribute("msg", user.getName() + "登录成功");
+                        request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
                     }
-                    request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
+//                    request.getRequestDispatcher("/vetsearch.jsp").forward(request, response);
                 }
             }
         }
