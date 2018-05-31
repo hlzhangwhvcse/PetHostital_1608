@@ -30,6 +30,7 @@
                     <td>
                         <%--petName, customerId和petId，这三个参数都来自customerdetail.jsp的添加病历链接--%>
                         <input name="pname" value="<%=request.getParameter("petName")%>"  disabled="disabled"/>
+                            <input type="hidden" name="petName" value="<%=request.getParameter("petName")%>"/>
                         <input type="hidden" name="cid" value="<%=request.getParameter("customerId")%>" />
                         <input type="hidden" name="pid" value="<%=request.getParameter("petId")%>" />
                     </td>

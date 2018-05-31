@@ -121,8 +121,9 @@ public class VisitServlet extends HttpServlet
             visit.setTreatment(request.getParameter("treatment"));
             VisitDAO visitDAO = new VisitDAO();
             visitDAO.save(visit);
-            request.setAttribute("msg", "病历添加成功");
-//            response.sendRedirect("CustomerServlet?mode=saveVisit&cid="+request.getParameter("cid"));
+//            request.setAttribute("msg", "病历添加成功");
+            String petName = request.getParameter("petName");
+            request.setAttribute("msg", "宠物"+ petName + "的病历添加成功");;
             request.getRequestDispatcher("/visitSearch.jsp").forward(request, response);
         }
         catch (Exception e)
